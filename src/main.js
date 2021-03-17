@@ -17,13 +17,12 @@ export default class PlaybackRatePlugin extends UICorePlugin {
   get name() { return 'playback_rate' }
   get template() { return template(pluginHtml) }
 
-	/**
-	 * Clappr 0.4.x wants to know what versions this plugin is targeting.
-	 */
-	get supportedVersion()
-	{
-		return { min: '0.4.0', max: '0.5.0' };
-	}
+    /**
+     * Clappr 0.4.x wants to know what versions this plugin is targeting.
+     */
+    get supportedVersion() {
+        return { min: '0.4.0', max: '0.5.0' }
+    }
 
   get attributes() {
     return {
@@ -116,6 +115,34 @@ export default class PlaybackRatePlugin extends UICorePlugin {
 
   toggleContextMenu() {
     this.$('.playback_rate ul').toggle()
+    this.positionMenu(this.$('.playback_rate ul'));
+  }
+
+  positionMenu($menu) {
+    if (!$menu.is(":visible"))
+      return
+    let parent = this.$el.get(0)
+    let buttonW = this.$el.width()
+    let buttonX = 0
+    let buttonY = 0
+    while (parent && parent !== this.core.el)
+    {
+      buttonX += parent.offsetLeft
+      buttonY += parent.offsetTop
+      parent = parent.offsetParent
+    }
+    let maxHeight = buttonY
+    $menu.css('max-height', maxHeight + 'px')
+    let w = $menu.width()
+    let h = $menu.height()
+    let x = buttonX + ((buttonW - w) / 2)
+    let y = buttonY - h
+    if (x + w > this.core.el.offsetWidth)
+      x = this.core.el.offsetWidth - w
+    if (x < 0)
+      x = 0
+    $menu.css('top', (y - buttonY) + 'px')
+    $menu.css('left', (x - buttonX) + 'px')
   }
 
   hideContextMenu() {

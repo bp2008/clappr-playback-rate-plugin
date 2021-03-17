@@ -5,6 +5,7 @@ button[data-playback-rate-button] {
 .media-control[data-media-control] .media-control-layer[data-controls] .playback_rate[data-playback-rate-select] {
   float: right;
   margin-top: 5px;
+  margin-bottom: 5px;
   position: relative;
   line-height: 1em;
   overflow-wrap: normal;
@@ -26,13 +27,15 @@ button[data-playback-rate-button] {
   }
 
   &> ul {
+    overflow-x: hidden;
+    overflow-y: auto;
     display: none;
     list-style-type: none;
     position: absolute;
-    bottom: 35px;
     border: 1px solid black;
     border-radius: 4px;
     background-color: rgba(0,0,0,0.7);
+	box-sizing: border-box;
   }
 
   li {
